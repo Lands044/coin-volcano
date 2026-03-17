@@ -1,216 +1,453 @@
-$red: #8b1a1a;
-$dark-red: #3d0a0a;
 $gold: #ffb921;
 $gold-light: #f5d77a;
-$gold-border: #c9a227;
 $orange-border: #fe851c;
-$cyan: #00d4ff;
-$bg-dark: #1a0505;
-$menu-bg: #2d1515;
-$frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
+$red: #8b1a1a;
 
-// Base width for vw calculations (design width)
+// Base width for vw calculations
 $base-width: 1440;
 
-// Function to convert px to vw (proportional scaling only for screens > 1440px)
-// On screens <= 1440px returns fixed px value
-// On screens > 1440px scales proportionally
 @function vw($px) {
 	@return max(#{$px}px, calc(#{$px} / #{$base-width} * 100vw));
 }
 
+$frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
+
+// ─────────────────────────────────────────
+// Page
+// ─────────────────────────────────────────
 .page {
-	background: url('../../../assets/img/bg.jpg') top center/cover no-repeat;
-	background-color: $dark-red;
+	background: linear-gradient(180deg, #3a1a6e 0%, #5a2d91 40%, #6b35a8 70%, #7a3fbf 100%);
 	min-height: 100vh;
-	min-height: 100dvh; // Dynamic viewport height for iOS Safari/Chrome
+	min-height: 100dvh;
 	display: flex;
 	flex-direction: column;
 
 	&__container {
 		display: flex;
-		align-items: center;
+		align-items: stretch;
 		justify-content: center;
 		flex: 1;
 	}
 }
 
+// ─────────────────────────────────────────
+// Game layout
+// ─────────────────────────────────────────
 .game {
 	width: 100%;
 	height: 100vh;
-	height: 100dvh; // Dynamic viewport height for iOS Safari/Chrome
-	height: calc(var(--vh, 1vh) * 100); // JS fallback for older browsers
-	position: relative;
-	z-index: 5;
-	padding: vw(10) vw(30);
+	height: 100dvh;
+	height: calc(var(--vh, 1vh) * 100);
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	position: relative;
+	z-index: 5;
 
-	@media (max-width:toEm($mobile)){
-		padding-left: 0;
-		padding-right: 0;
-	}
+	&__main {
+		flex: 1;
+		display: grid;
+		grid-template-columns: vw(220) 1fr vw(100);
+		gap: 0;
+		align-items: stretch;
+		min-height: 0;
 
-	@media (min-height: toEm(860)) and (max-width: toEm($mobile)) {
-		padding-top: 25%;
-	}
-
-	&__wrap {
-		width: 100%;
-		padding: 0 vw(80);
-
-		@media (max-width:toEm($tablet)){
-			padding: 0;
+		@media (max-width: toEm($mobile)) {
+			grid-template-columns: 80px 1fr 60px;
 		}
 	}
 
-	&__header {
+	&__sidebar {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		justify-content: space-between;
-		gap: vw(10);
-		position: relative;
-		z-index: 10;
-		padding: 0 vw(10);
+		justify-content: center;
+		gap: vw(20);
+		padding: vw(20);
 
-		@media (max-width:toEm($mobile)){
-			display: grid;
-			grid-template-columns: 1fr 1fr;
+		@media (max-width: toEm($mobile)) {
+			padding: 10px 8px;
+			gap: 12px;
+		}
+
+		&--right {
+			justify-content: space-evenly;
+			padding: vw(16) vw(10);
+
+			@media (max-width: toEm($mobile)) {
+				padding: 10px 6px;
+			}
 		}
 	}
 
 	&__logo {
-		flex: 1;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		max-width: vw(360);
-		min-width: vw(260);
 		width: 100%;
-		margin: 0 auto;
-		position: relative;
-		z-index: 100;
-		height: vw(64);
+		max-width: vw(180);
 
 		img {
 			width: 100%;
 			height: auto;
+			display: block;
 		}
 
-		@media (max-width:toEm($mobile)){
-			max-width: 200px;
-			grid-column: 2 span;
-			order: 1;
+		@media (max-width: toEm($mobile)) {
+			max-width: 70px;
 		}
 	}
 
 	&__field {
-		margin-top: vw(4);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
+		padding: 0;
+		gap: 0;
+	}
+}
 
-		@media (max-height: toEm(700)) {
-			margin-top: 10px;
+// ─────────────────────────────────────────
+// Jackpots top row
+// ─────────────────────────────────────────
+.jackpots {
+	display: flex;
+	align-items: flex-end;
+	gap: vw(6);
+	width: 100%;
+	max-width: 800px;
+	padding: 0 vw(6) 0;
+
+	@media (max-width: toEm($mobile)) {
+		gap: 3px;
+		padding: 0 3px 0;
+	}
+}
+
+.jackpot {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 0;
+	position: relative;
+	// Gold outer border around entire card
+	border: vw(3) solid #d4a017;
+	border-radius: vw(8) vw(8) vw(6) vw(6);
+	box-shadow:
+		0 0 vw(12) rgba(212, 160, 23, 0.7),
+		inset 0 0 vw(4) rgba(255, 215, 100, 0.3);
+	overflow: visible;
+
+	@media (max-width: toEm($mobile)) {
+		border-width: 2px;
+		border-radius: 6px 6px 4px 4px;
+	}
+
+	// Oval label tab on top
+	&__label {
+		position: relative;
+		z-index: 2;
+		margin-top: vw(-2);
+		padding: vw(3) vw(14);
+		border-radius: vw(30);
+		border: vw(2) solid #d4a017;
+		font-size: vw(15);
+		font-weight: 900;
+		text-transform: uppercase;
+		letter-spacing: vw(1);
+		line-height: 1.3;
+		white-space: nowrap;
+		background: linear-gradient(180deg, #ffe066 0%, #f5a623 50%, #c47a00 100%);
+		color: inherit;
+		box-shadow: 0 vw(2) vw(6) rgba(0, 0, 0, 0.4);
+
+		@media (max-width: toEm($mobile)) {
+			font-size: 9px;
+			padding: 2px 8px;
+			border-width: 1px;
+			border-radius: 20px;
+			letter-spacing: 0;
+		}
+	}
+
+	// Value body below label
+	&__value {
+		width: 100%;
+		text-align: center;
+		font-size: vw(26);
+		font-weight: 900;
+		line-height: 1;
+		padding: vw(8) vw(6) vw(10);
+
+		@media (max-width: toEm($mobile)) {
+			font-size: 14px;
+			padding: 5px 4px 7px;
+		}
+	}
+
+	// GRAND — golden/orange body
+	&--grand {
+		background: linear-gradient(180deg, #e8a000 0%, #c47000 60%, #a05000 100%);
+
+		.jackpot__label {
+			color: #8b1a00;
+		}
+		.jackpot__value {
+			color: #c83200;
+			text-shadow: 0 vw(1) vw(3) rgba(0, 0, 0, 0.5);
+		}
+	}
+
+	// MAJOR — magenta/pink body
+	&--major {
+		background: linear-gradient(180deg, #d0006e 0%, #a0005a 60%, #700040 100%);
+
+		.jackpot__label {
+			color: #6b003a;
+		}
+		.jackpot__value {
+			color: #fff;
+			text-shadow: 0 vw(1) vw(4) rgba(0, 0, 0, 0.6);
+		}
+	}
+
+	// MINOR — blue body
+	&--minor {
+		background: linear-gradient(180deg, #1a5ec8 0%, #1040a0 60%, #0a2878 100%);
+
+		.jackpot__label {
+			color: #00247a;
+		}
+		.jackpot__value {
+			color: #fff;
+			text-shadow: 0 vw(1) vw(4) rgba(0, 0, 0, 0.6);
+		}
+	}
+
+	// MINI — green body
+	&--mini {
+		background: linear-gradient(180deg, #2a8a00 0%, #1a6a00 60%, #0e4800 100%);
+
+		.jackpot__label {
+			color: #0e4800;
+		}
+		.jackpot__value {
+			color: #fff;
+			text-shadow: 0 vw(1) vw(4) rgba(0, 0, 0, 0.6);
 		}
 	}
 }
 
-// Jackpot blocks
-.jackpot {
+// ─────────────────────────────────────────
+// Buy Bonus button
+// ─────────────────────────────────────────
+.buy-bonus {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: vw(4) vw(20);
-	max-width: vw(280);
+	justify-content: center;
+	background: linear-gradient(135deg, #1a6b1a 0%, #28a428 50%, #1a6b1a 100%);
+	border: vw(2) solid #6ddc00;
+	border-radius: vw(8);
+	padding: vw(10) vw(16);
+	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: 0 0 vw(12) rgba(109, 220, 0, 0.4);
+	text-decoration: none;
 	width: 100%;
+	max-width: vw(160);
 
-	@media (max-width:toEm($mobile)){
-		min-width: 100%;
-		padding: 5px 10px;
-		order: 2;
+	@media (max-width: toEm($mobile)) {
+		padding: 6px 8px;
+		border-radius: 6px;
+		max-width: 70px;
+		border-width: 1px;
 	}
-	
-	// висота менша за 700px та ширина менша за 768px
-	@media (max-height: toEm(700)) and (max-width: toEm($mobile)) {
-		display: none;
+
+	&:hover {
+		transform: scale(1.03);
+		box-shadow: 0 0 vw(20) rgba(109, 220, 0, 0.6);
 	}
 
 	&__label {
-		font-size: vw(18);
+		font-size: vw(13);
 		font-weight: 700;
+		color: #fff;
 		text-transform: uppercase;
-		letter-spacing: vw(2);
-		margin-bottom: vw(5);
+		letter-spacing: vw(1);
+		line-height: 1.2;
 
-		@media (max-width:toEm($mobile)){
-			font-size: 12px;
+		@media (max-width: toEm($mobile)) {
+			font-size: 8px;
+			letter-spacing: 0;
 		}
 	}
 
 	&__value {
-		font-size: vw(28);
+		font-size: vw(20);
 		font-weight: 900;
-		line-height: 1;
+		color: #fff;
 
-		@media (max-width:toEm($mobile)){
-			font-size: 24px;
-		}
-	}
-
-	&--mega {
-		border: vw(3) solid #ffa135;
-		border-radius: vw(6);
-		box-shadow: 0 0 vw(15) rgba(255, 107, 53, 0.8), inset 0 0 vw(20) rgba(255, 215, 0, 0.6);
-
-		.jackpot__label {
-			color: #ff6b35;
-			text-shadow: 0 0 vw(10) rgba(255, 107, 53, 0.8);
-		}
-		.jackpot__value {
-			color: $gold-light;
-			text-shadow: 0 0 vw(15) rgba(255, 215, 0, 0.6);
-		}
-	}
-
-	&--mini {
-		border: vw(3) solid $cyan;
-		border-radius: vw(6);
-		box-shadow: 0 0 vw(15) rgba(0, 212, 255, 0.5), inset 0 0 vw(20) rgba(0, 212, 255, 0.1);
-
-		.jackpot__label {
-			color: $cyan;
-			text-shadow: 0 0 vw(10) rgba(0, 212, 255, 0.8);
-		}
-		.jackpot__value {
-			color: #fff;
-			text-shadow: 0 0 vw(10) rgba(255, 255, 255, 0.5);
+		@media (max-width: toEm($mobile)) {
+			font-size: 12px;
 		}
 	}
 }
 
+// ─────────────────────────────────────────
+// Right sidebar buttons
+// ─────────────────────────────────────────
+.side-btn {
+	width: vw(56);
+	height: vw(56);
+	border-radius: 50%;
+	background: rgba(50, 50, 80, 0.85);
+	border: vw(2) solid rgba(255, 255, 255, 0.3);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	color: #fff;
+	text-decoration: none;
+	flex-shrink: 0;
+	position: relative;
 
+	@media (max-width: toEm($mobile)) {
+		width: 40px;
+		height: 40px;
+		border-width: 1px;
+	}
+
+	&:hover {
+		transform: scale(1.08);
+		border-color: rgba(255, 255, 255, 0.6);
+		background: rgba(70, 70, 110, 0.9);
+	}
+
+	&:active {
+		transform: scale(0.95);
+	}
+
+	&.disabled {
+		opacity: 0.4;
+		pointer-events: none;
+	}
+
+	&__label {
+		font-size: vw(9);
+		font-weight: 600;
+		color: #fff;
+		text-align: center;
+		line-height: 1.2;
+		margin-top: vw(2);
+		display: none;
+
+		@media (max-width: toEm($mobile)) {
+			font-size: 6px;
+		}
+	}
+
+	&__icon {
+		display: block;
+		width: vw(26);
+		height: vw(26);
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+
+		@media (max-width: toEm($mobile)) {
+			width: 18px;
+			height: 18px;
+		}
+
+		&--menu {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z'/%3E%3C/svg%3E");
+		}
+
+		&--sound {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z'/%3E%3C/svg%3E");
+		}
+
+		&--turbo {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z'/%3E%3C/svg%3E");
+		}
+
+		&--auto {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z'/%3E%3C/svg%3E");
+		}
+
+		&--settings {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z'/%3E%3C/svg%3E");
+		}
+	}
+
+	// Turbo spin — більша, з підписом
+	&--turbo {
+		width: vw(68);
+		height: vw(68);
+		border-color: rgba(255, 255, 255, 0.5);
+
+		@media (max-width: toEm($mobile)) {
+			width: 48px;
+			height: 48px;
+		}
+
+		.side-btn__label {
+			display: block;
+			font-size: vw(8);
+
+			@media (max-width: toEm($mobile)) {
+				font-size: 5px;
+				display: none;
+			}
+		}
+
+		.side-btn__icon--turbo {
+			width: vw(22);
+			height: vw(22);
+			margin-top: vw(2);
+
+			@media (max-width: toEm($mobile)) {
+				width: 16px;
+				height: 16px;
+				margin-top: 0;
+			}
+		}
+	}
+
+	// Sound off state
+	&.sound-off .side-btn__icon--sound,
+	&.menu__sound.sound-off .side-btn__icon--sound {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z'/%3E%3C/svg%3E");
+	}
+
+	&.sound-off,
+	&.menu__sound.sound-off {
+		opacity: 0.5;
+	}
+}
+
+// ─────────────────────────────────────────
+// Drum
+// ─────────────────────────────────────────
 .drum {
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: center;
 	overflow: hidden;
 	position: relative;
-	width: 100%;
 	max-width: 800px;
-	margin-left: auto;
-	margin-right: auto;
+	width: 100%;
 	background: $frameGradient;
-	border: vw(2) solid $gold;
-	box-shadow: 0 0 vw(6) rgba(246, 201, 139, 0.6);
-	padding: vw(4) vw(18);
-	border-radius: vw(16);
+	border: vw(3) solid $gold;
+	box-shadow: 0 0 vw(20) rgba(255, 185, 33, 0.5), inset 0 0 vw(10) rgba(255, 185, 33, 0.2);
+	padding: vw(6) vw(6);
+	border-radius: vw(12);
 
-	@media (max-width:toEm($mobile)){
-		padding: 4px;
+	@media (max-width: toEm($mobile)) {
+		padding: 3px;
 		border-width: 2px;
-		border-radius: 16px;
+		border-radius: 8px;
 	}
 
 	&__spinner {
@@ -221,13 +458,17 @@ $base-width: 1440;
 		background: $frameGradient;
 		position: relative;
 		z-index: 10;
-		border: vw(4) solid $orange-border;
-		box-shadow: 0 0 vw(6) rgba(246, 201, 139, 0.6);
-		border-radius: vw(12);
+		border: vw(3) solid $orange-border;
+		box-shadow: 0 0 vw(8) rgba(254, 133, 28, 0.5);
+		border-radius: vw(8);
+		gap: vw(4);
+		padding: vw(4);
 
-		@media (max-width:toEm($mobile)){
+		@media (max-width: toEm($mobile)) {
 			border-width: 2px;
-			border-radius: 12px;
+			border-radius: 6px;
+			gap: 2px;
+			padding: 2px;
 		}
 	}
 
@@ -235,23 +476,15 @@ $base-width: 1440;
 		position: relative;
 		overflow: hidden;
 		z-index: 10;
-		background-color: #000;
-		border: vw(4) solid $orange-border;
-		box-shadow: 0 0 vw(6) rgba(246, 201, 139, 0.6);
-		border-radius: vw(12);
-		// 180px * 3 = 540px -> vw(540) = 37.5vw
+		background: linear-gradient(180deg, #1a0a2e 0%, #2d1050 50%, #1a0a2e 100%);
+		border: vw(2) solid rgba(255, 185, 33, 0.3);
+		border-radius: vw(6);
 		height: vw(540);
 
-		&:not(:first-child),
-		&:not(:last-child) {
-			margin: vw(2) vw(2);
-		}
-
-		@media (max-width:toEm($mobile)){
+		@media (max-width: toEm($mobile)) {
 			height: calc(140px * 3);
-			border-width: 2px;
-			border-radius: 12px;
-			margin: 2px;
+			border-width: 1px;
+			border-radius: 4px;
 		}
 	}
 
@@ -272,17 +505,13 @@ $base-width: 1440;
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		// 180px -> vw(180) = 12.5vw
 		height: vw(180);
 		flex-shrink: 0;
+		padding: vw(8);
 
-		@media (max-width:toEm($mobile)){
+		@media (max-width: toEm($mobile)) {
 			height: 140px;
-			padding: 10px;
-		}
-
-		@media (max-width:toEm($mobileSmall)){
-			height: 140px;
+			padding: 8px;
 		}
 
 		img {
@@ -295,7 +524,77 @@ $base-width: 1440;
 	}
 }
 
-// Анімації виграшу
+// ─────────────────────────────────────────
+// Bottom menu bar
+// ─────────────────────────────────────────
+.menu {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: vw(60);
+	padding: vw(10) vw(20);
+	background: rgba(0, 0, 0, 0.4);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	color: #fff;
+
+	@media (max-width: toEm($mobile)) {
+		gap: 20px;
+		padding: 8px 16px;
+	}
+
+	&__info-block {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: vw(2);
+		min-width: vw(120);
+
+		@media (max-width: toEm($mobile)) {
+			min-width: 70px;
+			gap: 1px;
+		}
+	}
+
+	&__info-label {
+		font-size: vw(13);
+		color: rgba(255, 255, 255, 0.7);
+		text-transform: capitalize;
+		letter-spacing: vw(1);
+
+		@media (max-width: toEm($mobile)) {
+			font-size: 10px;
+			letter-spacing: 0;
+		}
+	}
+
+	&__info-value {
+		font-size: vw(22);
+		font-weight: 700;
+		color: #fff;
+
+		@media (max-width: toEm($mobile)) {
+			font-size: 15px;
+		}
+	}
+
+	// Hidden legacy elements (used by JS)
+	&__bottom {
+		display: none;
+
+		&.hidden {
+			display: none;
+		}
+	}
+
+	&__button-spin,
+	&__button-auto {
+		transition: opacity 0.3s ease, filter 0.3s ease;
+	}
+}
+
+// ─────────────────────────────────────────
+// Win animations
+// ─────────────────────────────────────────
 .bigwin-animation {
 	animation: pulse 0.3s ease-in-out infinite alternate;
 }
@@ -306,14 +605,13 @@ $base-width: 1440;
 
 @keyframes pulse {
 	from {
-		box-shadow: 0 0 vw(6) rgba(246, 201, 139, 0.6);
+		box-shadow: 0 0 vw(8) rgba(255, 185, 33, 0.5);
 	}
 	to {
-		box-shadow: 0 0 vw(30) rgba(255, 215, 0, 0.9), 0 0 vw(60) rgba(255, 215, 0, 0.5);
+		box-shadow: 0 0 vw(40) rgba(255, 215, 0, 0.9), 0 0 vw(70) rgba(255, 215, 0, 0.5);
 	}
 }
 
-// Вспишки при виграші
 .win-flash {
 	position: absolute;
 	width: vw(20);
@@ -324,42 +622,31 @@ $base-width: 1440;
 	animation: flash 0.6s ease-out forwards;
 	z-index: 100;
 
-	@media (max-width:toEm($mobile)){
+	@media (max-width: toEm($mobile)) {
 		width: 20px;
 		height: 20px;
 	}
 }
 
 @keyframes flash {
-	0% {
-		transform: scale(0);
-		opacity: 1;
-	}
-	100% {
-		transform: scale(3);
-		opacity: 0;
-	}
+	0% { transform: scale(0); opacity: 1; }
+	100% { transform: scale(3); opacity: 0; }
 }
 
-// Виграшна лінія
 .win-line-svg {
 	opacity: 0;
 	transition: opacity 0.3s ease;
 
-	&.visible {
-		opacity: 1;
-	}
+	&.visible { opacity: 1; }
 }
 
 .win-line {
 	fill: none;
-	stroke: linear;
-	stroke: url(#winLineGradient);
 	stroke: #ffcc00;
 	stroke-width: vw(6);
 	stroke-linecap: round;
 	stroke-linejoin: round;
-	filter: drop-shadow(0 0 vw(8) rgba(255, 200, 0, 0.8)) drop-shadow(0 0 vw(15) rgba(255, 150, 0, 0.6));
+	filter: drop-shadow(0 0 vw(8) rgba(255, 200, 0, 0.8));
 	animation: lineGlow 0.5s ease-in-out infinite alternate;
 }
 
@@ -372,60 +659,35 @@ $base-width: 1440;
 }
 
 @keyframes lineGlow {
-	from {
-		stroke-width: vw(5);
-		filter: drop-shadow(0 0 vw(8) rgba(255, 200, 0, 0.8)) drop-shadow(0 0 vw(15) rgba(255, 150, 0, 0.6));
-	}
-	to {
-		stroke-width: vw(8);
-		filter: drop-shadow(0 0 vw(12) rgba(255, 200, 0, 1)) drop-shadow(0 0 vw(25) rgba(255, 150, 0, 0.8));
-	}
+	from { stroke-width: vw(5); }
+	to { stroke-width: vw(8); }
 }
 
 @keyframes dotPulse {
-	from {
-		r: 6;
-		opacity: 0.8;
-	}
-	to {
-		r: 10;
-		opacity: 1;
-	}
+	from { r: 6; opacity: 0.8; }
+	to { r: 10; opacity: 1; }
 }
 
-// Затемнення невиграшних іконок
 .drum__image.dimmed {
-	filter: brightness(0.4);
+	filter: brightness(0.35);
 	transition: filter 0.3s ease;
 }
 
-// Хитання виграшних іконок
 .drum__image.winning {
 	animation: wobble 0.4s ease-in-out infinite;
-	filter: brightness(1.1) drop-shadow(0 0 vw(8) rgba(255, 215, 0, 0.8));
+	filter: brightness(1.2) drop-shadow(0 0 vw(10) rgba(255, 215, 0, 0.9));
 	z-index: 20;
 	position: relative;
 }
 
 @keyframes wobble {
-	0% {
-		transform: rotate(0deg);
-	}
-	25% {
-		transform: rotate(5deg);
-	}
-	50% {
-		transform: rotate(0deg);
-	}
-	75% {
-		transform: rotate(-5deg);
-	}
-	100% {
-		transform: rotate(0deg);
-	}
+	0% { transform: rotate(0deg); }
+	25% { transform: rotate(5deg); }
+	50% { transform: rotate(0deg); }
+	75% { transform: rotate(-5deg); }
+	100% { transform: rotate(0deg); }
 }
 
-// Анімована обводка виграшних іконок (border animation)
 .drum__image.win-border-animation {
 	position: relative;
 	z-index: 20;
@@ -435,55 +697,24 @@ $base-width: 1440;
 	opacity: 0;
 	transition: opacity 0.3s ease;
 
-	&.active {
-		opacity: 1;
-	}
-
-	// Перша лінія
-	.animated-border-rect {
-		animation: borderRotate 3s linear infinite;
-	}
-
-	.animated-border-glow {
-		animation: borderRotate 3s linear infinite;
-	}
-
-	// Друга лінія (діагональ)
-	.animated-border-rect-2 {
-		animation: borderRotate2 3s linear infinite;
-	}
-
-	.animated-border-glow-2 {
-		animation: borderRotate2 3s linear infinite;
-	}
+	&.active { opacity: 1; }
 }
 
 @keyframes borderRotate {
-	0% {
-		stroke-dashoffset: 0;
-	}
-	100% {
-		stroke-dashoffset: -800;
-	}
+	0% { stroke-dashoffset: 0; }
+	100% { stroke-dashoffset: -800; }
 }
 
 @keyframes borderRotate2 {
-	0% {
-		stroke-dashoffset: -400;
-	}
-	100% {
-		stroke-dashoffset: -1200;
-	}
+	0% { stroke-dashoffset: -400; }
+	100% { stroke-dashoffset: -1200; }
 }
 
-// Paylines SVG
 .paylines-svg {
 	opacity: 0;
 	transition: opacity 0.3s ease;
 
-	&.visible {
-		opacity: 1;
-	}
+	&.visible { opacity: 1; }
 }
 
 .payline {
@@ -492,11 +723,9 @@ $base-width: 1440;
 	stroke-width: vw(5);
 	stroke-linecap: round;
 	stroke-linejoin: round;
-	paint-order: stroke fill;
 	filter: drop-shadow(0 0 vw(4) rgba(0, 0, 0, 0.5));
 }
 
-// Червона обводка для ліній
 .payline-stroke {
 	fill: none;
 	stroke: #d53404;
@@ -505,394 +734,9 @@ $base-width: 1440;
 	stroke-linejoin: round;
 }
 
-
-.menu {
-	width: 100%;
-	z-index: 10;
-	color: #fff;
-	font-weight: 500;
-	font-size: vw(16);
-
-	@media (max-width:toEm($mobile)){
-		font-size: 16px;
-	}
-
-	&__top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: vw(8) vw(15);
-		gap: vw(15);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-		@media (max-width:toEm($mobile)){
-			padding: 6px 10px;
-			gap: 10px;
-		}
-	}
-
-	&__bottom {
-		position: absolute;
-		top: 0;
-		right: 0;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: space-around;
-		padding: 0 vw(15);
-		gap: vw(12);
-		transition: opacity 0.3s ease, visibility 0.3s ease;
-
-		@media (max-width:toEm($mobile)){
-			padding: 8px 10px;
-			gap: 8px;
-		}
-
-		&.hidden {
-			opacity: 0;
-			visibility: hidden;
-			pointer-events: none;
-		}
-	}
-
-	&__wrap {
-		display: flex;
-		align-items: center;
-		gap: vw(10);
-		background-color: $dark-red;
-		border-radius: vw(36);
-		padding: vw(5);
-
-		@media (max-width:toEm($mobile)){
-			gap: 10px;
-			border-radius: 36px;
-			padding: 5px;
-		}
-	}
-
-	&__box {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: vw(25);
-
-		@media (max-width:toEm($mobile)){
-			gap: 25px;
-		}
-	}
-
-	&__status {
-		flex: 1;
-		text-align: center;
-		font-size: vw(18);
-		font-weight: 700;
-		color: #fff;
-		letter-spacing: vw(2);
-		text-transform: uppercase;
-
-		@media (max-width:toEm($mobile)){
-			font-size: 14px;
-			letter-spacing: 2px;
-		}
-	}
-
-	&__btn {
-		width: vw(50);
-		height: vw(50);
-		border-radius: 50%;
-		background: transparent;
-		border: vw(3) solid rgba(255, 255, 255, 0.4);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		color: #fff;
-		font-size: vw(18);
-
-		@media (max-width:toEm($mobile)){
-			width: 42px;
-			height: 42px;
-			font-size: 14px;
-			border-width: 3px;
-		}
-
-		&:hover {
-			transform: scale(1.05);
-			border-color: rgba(255, 255, 255, 0.6);
-		}
-
-		&:active {
-			transform: scale(0.95);
-		}
-
-		&--sound {
-			.menu__btn-icon::before {
-				content: '';
-				display: block;
-				width: vw(24);
-				height: vw(24);
-				background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z'/%3E%3C/svg%3E") center/contain no-repeat;
-
-				@media (max-width:toEm($mobile)){
-					width: 20px;
-					height: 20px;
-				}
-			}
-
-			&.sound-off {
-				opacity: 0.5;
-
-				.menu__btn-icon::before {
-					background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z'/%3E%3C/svg%3E");
-				}
-			}
-		}
-
-		&--info {
-			.menu__btn-icon {
-				font-family: serif;
-				font-style: italic;
-				font-weight: 700;
-				font-size: vw(24);
-
-				@media (max-width:toEm($mobile)){
-					font-size: 24px;
-				}
-			}
-
-			@media (max-width:toEm($mobileSmall)){
-				display: none;
-			}
-		}
-
-		&--arrow {
-			width: vw(50);
-			height: vw(50);
-			border-radius: 50%;
-			font-size: vw(16);
-
-			@media (max-width:toEm($mobile)){
-				width: 42px;
-				height: 42px;
-				font-size: 14px;
-			}
-		}
-
-		&--auto {
-			.menu__btn-icon::before {
-				content: '';
-				display: block;
-				width: vw(26);
-				height: vw(26);
-				background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z'/%3E%3C/svg%3E") center/contain no-repeat;
-
-				@media (max-width:toEm($mobile)){
-					width: 20px;
-					height: 20px;
-				}
-			}
-		}
-
-		&--spin {
-			width: vw(70);
-			height: vw(70);
-			border: vw(3) solid rgba(255, 255, 255, 0.4);
-			flex-direction: column;
-			gap: vw(2);
-
-			@media (max-width:toEm($mobile)){
-				width: 58px;
-				height: 58px;
-				border-width: 3px;
-				gap: 2px;
-			}
-
-			.menu__btn-text {
-				font-size: vw(12);
-				font-weight: 700;
-				letter-spacing: vw(1);
-
-				@media (max-width:toEm($mobile)){
-					font-size: 10px;
-					letter-spacing: 1px;
-				}
-			}
-
-			&::before {
-				content: '';
-				display: block;
-				width: vw(32);
-				height: vw(32);
-				background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z'/%3E%3C/svg%3E") center/contain no-repeat;
-
-				@media (max-width:toEm($mobile)){
-					width: 26px;
-					height: 26px;
-				}
-			}
-
-			&:hover {
-				border-color: rgba(255, 255, 255, 0.6);
-			}
-		}
-
-		&.disabled {
-			opacity: 0.5;
-			filter: grayscale(0.5);
-			pointer-events: none;
-		}
-	}
-
-	&__button-spin,
-	&__button-auto {
-		transition: opacity 0.3s ease, filter 0.3s ease;
-
-		&.disabled {
-			opacity: 0.5;
-			filter: grayscale(0.5);
-			pointer-events: none;
-		}
-	}
-
-	&__balance {
-		background: transparent;
-		border: vw(3) solid $gold;
-		border-radius: vw(8);
-		padding: vw(6) vw(20);
-		text-align: center;
-		width: vw(126);
-
-		@media (max-width:toEm($mobile)){
-			padding: 4px 12px;
-			min-width: 90px;
-			width: auto;
-			border-width: 3px;
-			border-radius: 8px;
-		}
-
-		&-label {
-			display: block;
-			font-size: vw(12);
-			color: #fff;
-			text-transform: uppercase;
-			letter-spacing: vw(1);
-			margin-bottom: vw(2);
-
-			@media (max-width:toEm($mobile)){
-				font-size: 9px;
-				letter-spacing: 1px;
-				margin-bottom: 2px;
-			}
-		}
-
-		&-value {
-			display: block;
-			font-size: vw(20);
-			font-weight: 700;
-			color: #fff;
-
-			@media (max-width:toEm($mobile)){
-				font-size: 16px;
-			}
-		}
-	}
-
-	&__bets {
-		display: flex;
-		gap: vw(5);
-		background: transparent;
-		border-radius: vw(30);
-		padding: 0;
-		border: none;
-
-		@media (max-width:toEm($tablet)){
-			display: none;
-		}
-	}
-
-	&__bet-btn {
-		padding: vw(14) vw(28);
-		background: transparent;
-		border: none;
-		border-radius: vw(30);
-		color: #fff;
-		font-size: vw(20);
-		font-weight: 700;
-		cursor: pointer;
-		transition: all 0.2s ease;
-
-		@media (max-width:toEm($mobile)){
-			padding: 10px 18px;
-			font-size: 16px;
-			border-radius: 30px;
-		}
-
-		@media (max-width:toEm($mobileSmall)){
-			padding: 8px 14px;
-			font-size: 14px;
-		}
-
-		&:hover {
-			background: rgba(255, 255, 255, 0.1);
-		}
-
-		&.active {
-			background: #8b3a3a;
-			border-radius: vw(30);
-
-			@media (max-width:toEm($mobile)){
-				border-radius: 30px;
-			}
-		}
-	}
-
-	&__bet-display {
-		background: transparent;
-		border: vw(3) solid $gold;
-		border-radius: vw(8);
-		padding: vw(6) vw(25);
-		text-align: center;
-		width: vw(126);
-
-		@media (max-width:toEm($mobile)){
-			padding: 4px 15px;
-			min-width: 70px;
-			width: auto;
-			border-width: 3px;
-			border-radius: 8px;
-		}
-
-		&-label {
-			display: block;
-			font-size: vw(12);
-			color: #fff;
-			text-transform: uppercase;
-			letter-spacing: vw(1);
-			margin-bottom: vw(2);
-
-			@media (max-width:toEm($mobile)){
-				font-size: 10px;
-				letter-spacing: 1px;
-				margin-bottom: 2px;
-			}
-		}
-
-		&-value {
-			display: block;
-			font-size: vw(28);
-			font-weight: 700;
-			color: $gold;
-
-			@media (max-width:toEm($mobile)){
-				font-size: 22px;
-			}
-		}
-	}
-}
-
-
+// ─────────────────────────────────────────
+// Popup
+// ─────────────────────────────────────────
 .popup {
 	position: fixed;
 	top: 0;
@@ -908,34 +752,18 @@ $base-width: 1440;
 		opacity: 1;
 		visibility: visible;
 
-		.popup__overlay {
-			opacity: 1;
-		}
-
-		.popup__content {
-			scale: 1;
-			opacity: 1;
-		}
-
-		.confetti-canvas {
-			opacity: 1;
-		}
+		.popup__overlay { opacity: 1; }
+		.popup__content { scale: 1; opacity: 1; }
+		.confetti-canvas { opacity: 1; }
 	}
 
 	&__overlay {
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		inset: 0;
 		background: rgba(0, 0, 0, 0.65);
-		backdrop-filter: blur(vw(10));
+		backdrop-filter: blur(10px);
 		opacity: 0;
 		transition: opacity 0.5s ease;
-
-		@media (max-width:toEm($mobile)) {
-			backdrop-filter: blur(10px);
-		}
 	}
 
 	&__content {
@@ -950,22 +778,17 @@ $base-width: 1440;
 	}
 
 	&__inner {
-		background-color: $red;
+		background: linear-gradient(135deg, #3a1a6e 0%, #5a2d91 100%);
 		border: vw(4) solid #ffd700;
 		border-radius: vw(30);
 		padding: vw(50) vw(60);
 		text-align: center;
-		box-shadow: 0 vw(20) vw(60) rgba(255, 215, 0, 0.3),
-					0 0 vw(40) rgba(255, 107, 157, 0.4),
-					inset 0 vw(2) vw(20) rgba(255, 255, 255, 0.1);
-		position: relative;
-		overflow: hidden;
+		box-shadow: 0 vw(20) vw(60) rgba(255, 215, 0, 0.3);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 
-		@media (max-width:toEm($mobile)) {
+		@media (max-width: toEm($mobile)) {
 			padding: 40px 30px;
 			border-radius: 20px;
 			border-width: 3px;
@@ -976,17 +799,13 @@ $base-width: 1440;
 		font-size: vw(48);
 		font-weight: 700;
 		color: #ffd700;
-		text-shadow: 0 0 vw(20) rgba(255, 215, 0, 0.5),
-					 0 vw(4) vw(8) rgba(0, 0, 0, 0.5);
 		margin-bottom: vw(20);
 		text-transform: uppercase;
 		letter-spacing: vw(2);
-		animation: titleGlow 2s ease-in-out infinite;
 
-		@media (max-width:toEm($mobile)) {
+		@media (max-width: toEm($mobile)) {
 			font-size: 24px;
 			margin-bottom: 15px;
-			letter-spacing: 2px;
 		}
 	}
 
@@ -995,9 +814,8 @@ $base-width: 1440;
 		font-weight: 600;
 		color: #fff;
 		margin-bottom: vw(40);
-		text-shadow: 0 vw(2) vw(4) rgba(0, 0, 0, 0.5);
 
-		@media (max-width:toEm($mobile)) {
+		@media (max-width: toEm($mobile)) {
 			font-size: 16px;
 			margin-bottom: 30px;
 		}
@@ -1005,56 +823,40 @@ $base-width: 1440;
 }
 
 .cta-button {
-	background-color: $red;
+	background: linear-gradient(135deg, #1a6b1a 0%, #28a428 100%);
 	color: #fff;
-	padding: vw(15) vw(25);
+	padding: vw(15) vw(40);
 	font-size: vw(22);
 	font-weight: 700;
 	border-radius: vw(12);
-	border: vw(2) solid #fff;
+	border: vw(2) solid #6ddc00;
 	text-align: center;
 	animation: ctaPulse 1.5s ease-in-out infinite;
+	text-decoration: none;
+	display: inline-block;
 
-	@media (max-width:toEm($mobile)) {
-		padding: 15px 25px;
-		font-size: 22px;
-		border-radius: 12px;
-		border-width: 2px;
+	@media (max-width: toEm($mobile)) {
+		padding: 15px 30px;
+		font-size: 18px;
+		border-radius: 10px;
 	}
 }
 
 @keyframes ctaPulse {
-	0% {
-		transform: scale(1);
-		box-shadow: 0 0 0 0 rgba($red, 0.7);
-	}
-	50% {
-		transform: scale(1.05);
-		box-shadow: 0 0 vw(20) vw(10) rgba($red, 0.3);
-	}
-	100% {
-		transform: scale(1);
-		box-shadow: 0 0 0 0 rgba($red, 0);
-	}
+	0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 164, 40, 0.7); }
+	50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(40, 164, 40, 0.3); }
+	100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 164, 40, 0); }
 }
 
-// Canvas для конфеті
 .confetti-canvas {
 	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	inset: 0;
 	pointer-events: none;
 	z-index: 99;
 	opacity: 0;
 	transition: opacity 0.3s ease;
 
-	.popup.show & {
-		opacity: 1;
-	}
+	.popup.show & { opacity: 1; }
 
-	canvas {
-		display: block;
-	}
+	canvas { display: block; }
 }
