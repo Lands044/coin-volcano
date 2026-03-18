@@ -1,6 +1,6 @@
 $gold: #ffb921;
 $gold-light: #f5d77a;
-$orange-border: #fe581c;
+$orange-border: #fe851c;
 $red: #8b1a1a;
 
 // Base width for vw calculations
@@ -484,7 +484,6 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		z-index: 20;
 		pointer-events: none;
 
-		// Gold top & bottom border lines
 		border: 6px solid $orange-border;
 		border-left-width: 16px;
 		border-right-width: 16px;
