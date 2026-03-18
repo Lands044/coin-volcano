@@ -188,6 +188,15 @@ class SlotMachine {
 		// Створюємо структуру барабанів зі стрічками
 		this.createReels();
 
+		// Обробник buy bonus
+		const buyBonusBtn = document.querySelector('.buy-bonus');
+		if (buyBonusBtn) {
+			buyBonusBtn.addEventListener('click', (e) => {
+				e.preventDefault();
+				this.handleBuyBonus(buyBonusBtn);
+			});
+		}
+
 		// Обробники кнопок спіну
 		this.spinButton.addEventListener('click', (e) => {
 			e.preventDefault();
@@ -918,6 +927,53 @@ class SlotMachine {
 	}
 
 	// Показ CTA popup
+	handleBuyBonus(btn) {
+		if (btn.classList.contains('buy-bonus--used')) return;
+
+		const bonusAmount = 30;
+
+		// Дізейблимо кнопку
+		btn.classList.add('buy-bonus--used');
+
+		// Додаємо бонус до балансу
+		this.balance += bonusAmount;
+		this.updateUI();
+
+		// Анімація: спалах монет з кнопки
+		const btnRect = btn.getBoundingClientRect();
+		const coinCount = 12;
+
+		for (let i = 0; i < coinCount; i++) {
+			setTimeout(() => {
+				const coin = document.createElement('div');
+				coin.className = 'bonus-coin';
+
+				// Стартова позиція — центр кнопки
+				coin.style.left = `${btnRect.left + btnRect.width / 2}px`;
+				coin.style.top = `${btnRect.top + btnRect.height / 2}px`;
+
+				// Випадковий напрямок розльоту
+				const angle = (Math.random() * 360) * (Math.PI / 180);
+				const distance = 80 + Math.random() * 120;
+				coin.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+				coin.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+				coin.style.setProperty('--rotate', `${Math.random() * 720 - 360}deg`);
+
+				document.body.appendChild(coin);
+				setTimeout(() => coin.remove(), 900);
+			}, i * 50);
+		}
+
+		// Анімація числа +30 що піднімається
+		const plus = document.createElement('div');
+		plus.className = 'bonus-plus';
+		plus.textContent = `+${bonusAmount}`;
+		plus.style.left = `${btnRect.left + btnRect.width / 2}px`;
+		plus.style.top = `${btnRect.top}px`;
+		document.body.appendChild(plus);
+		setTimeout(() => plus.remove(), 1000);
+	}
+
 	showCTA() {
 		this.buttonsWrap.classList.add('hidden');
 
