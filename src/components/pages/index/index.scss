@@ -17,7 +17,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 // ─────────────────────────────────────────
 .page {
 	background: linear-gradient(180deg, #3a1a6e 0%, #5a2d91 40%, #6b35a8 70%, #7a3fbf 100%);
-	background: url('../../../assets/img/bg.jpg') center/cover no-repeat;
+	background: url('../../../assets/img/bg.webp') center/cover no-repeat;
 	min-height: 100vh;
 	min-height: 100dvh;
 	display: flex;
@@ -583,19 +583,17 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		position: relative;
 		z-index: 3;
 
-		// z-index 1: bg-purple.png — фон для всіх іконок
 		&::before {
 			content: '';
 			position: absolute;
 			inset: 0;
 			z-index: 1;
-			background: url('../../../assets/img/drum/bg-purple.png') center / cover no-repeat;
+			background: url('../../../assets/img/drum/bg-purple.webp') center / cover no-repeat;
 		}
 
-		// z-index 2: bg-red.png — тільки для центрального рядка (клас .is-center)
 		&.is-center::before {
 			transition: background-image .6s ease-in-out;
-			background-image: url('../../../assets/img/drum/bg-red.png');
+			background-image: url('../../../assets/img/drum/bg-red.webp');
 		}
 
 		// img поверх обох фонів
