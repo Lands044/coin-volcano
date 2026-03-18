@@ -305,6 +305,11 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		opacity: 0.6;
 	}
 
+	&--spinning {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+
 	&__label {
 		font-size: vw(13);
 		font-weight: 700;
@@ -958,54 +963,40 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 // Buy bonus animations
 .bonus-coin {
 	position: fixed;
-	width: 28px;
-	height: 28px;
+	width: 26px;
+	height: 26px;
 	border-radius: 50%;
 	background: radial-gradient(circle at 35% 35%, #fff7a0, #ffd700 40%, #b8860b);
 	border: 2px solid #f5a623;
-	box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+	box-shadow: 0 0 10px rgba(255, 215, 0, 0.9), 0 0 20px rgba(255, 215, 0, 0.4);
 	pointer-events: none;
 	z-index: 9999;
 	transform: translate(-50%, -50%);
-	animation: bonusCoinFly 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+	animation: bonusCoinFly 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes bonusCoinFly {
 	0% {
-		transform: translate(-50%, -50%) rotate(0deg) scale(1);
+		transform: translate(-50%, -50%) rotate(0deg) scale(1.2);
 		opacity: 1;
 	}
-	70% {
+	80% {
 		opacity: 1;
+		transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rotate)) scale(0.8);
 	}
 	100% {
-		transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rotate)) scale(0.3);
+		transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rotate)) scale(0);
 		opacity: 0;
 	}
 }
 
-.bonus-plus {
-	position: fixed;
-	transform: translateX(-50%);
-	font-size: 32px;
-	font-weight: 900;
-	color: #ffd700;
-	text-shadow: 0 0 12px rgba(255, 215, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
-	pointer-events: none;
-	z-index: 9999;
-	animation: bonusPlusRise 1s ease-out forwards;
+// Спалах на елементі балансу коли монета долітає
+.balance-flash {
+	animation: balanceFlash 0.3s ease-out;
 }
 
-@keyframes bonusPlusRise {
-	0% {
-		opacity: 1;
-		transform: translateX(-50%) translateY(0) scale(0.6);
-	}
-	20% {
-		transform: translateX(-50%) translateY(-10px) scale(1.2);
-	}
-	100% {
-		opacity: 0;
-		transform: translateX(-50%) translateY(-80px) scale(1);
-	}
+@keyframes balanceFlash {
+	0%   { transform: scale(1);    color: #fff; }
+	50%  { transform: scale(1.25); color: #ffd700; text-shadow: 0 0 16px rgba(255, 215, 0, 1); }
+	100% { transform: scale(1);    color: #fff; }
 }

@@ -929,49 +929,59 @@ class SlotMachine {
 	// Показ CTA popup
 	handleBuyBonus(btn) {
 		if (btn.classList.contains('buy-bonus--used')) return;
+		if (this.isSpinning) return;
 
 		const bonusAmount = 30;
+		const coinCount = 10;
+		const coinDuration = 800; // ms кожна монета летить
 
-		// Дізейблимо кнопку
+		// Дізейблимо одразу
 		btn.classList.add('buy-bonus--used');
 
-		// Додаємо бонус до балансу
-		this.balance += bonusAmount;
-		this.updateUI();
-
-		// Анімація: спалах монет з кнопки
 		const btnRect = btn.getBoundingClientRect();
-		const coinCount = 12;
+		const balanceEl = document.querySelector('.menu__info .number');
+		const balanceRect = balanceEl.getBoundingClientRect();
 
+		// Ціль — центр елемента балансу
+		const targetX = balanceRect.left + balanceRect.width / 2;
+		const targetY = balanceRect.top + balanceRect.height / 2;
+
+		// Запускаємо монети з невеликою затримкою між ними
 		for (let i = 0; i < coinCount; i++) {
 			setTimeout(() => {
 				const coin = document.createElement('div');
 				coin.className = 'bonus-coin';
 
-				// Стартова позиція — центр кнопки
-				coin.style.left = `${btnRect.left + btnRect.width / 2}px`;
-				coin.style.top = `${btnRect.top + btnRect.height / 2}px`;
+				// Старт — центр кнопки з невеликим розкидом
+				const startX = btnRect.left + btnRect.width / 2 + (Math.random() - 0.5) * 30;
+				const startY = btnRect.top + btnRect.height / 2 + (Math.random() - 0.5) * 20;
 
-				// Випадковий напрямок розльоту
-				const angle = (Math.random() * 360) * (Math.PI / 180);
-				const distance = 80 + Math.random() * 120;
-				coin.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
-				coin.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
-				coin.style.setProperty('--rotate', `${Math.random() * 720 - 360}deg`);
+				coin.style.left = `${startX}px`;
+				coin.style.top = `${startY}px`;
+
+				// Вектор до балансу
+				coin.style.setProperty('--tx', `${targetX - startX}px`);
+				coin.style.setProperty('--ty', `${targetY - startY}px`);
+				coin.style.setProperty('--rotate', `${Math.random() * 540 - 270}deg`);
 
 				document.body.appendChild(coin);
-				setTimeout(() => coin.remove(), 900);
-			}, i * 50);
+
+				// Спалах на балансі коли монета долітає
+				setTimeout(() => {
+					coin.remove();
+					balanceEl.closest('.menu__info-value').classList.add('balance-flash');
+					setTimeout(() => {
+						balanceEl.closest('.menu__info-value').classList.remove('balance-flash');
+					}, 300);
+				}, coinDuration);
+			}, i * 60);
 		}
 
-		// Анімація числа +30 що піднімається
-		const plus = document.createElement('div');
-		plus.className = 'bonus-plus';
-		plus.textContent = `+${bonusAmount}`;
-		plus.style.left = `${btnRect.left + btnRect.width / 2}px`;
-		plus.style.top = `${btnRect.top}px`;
-		document.body.appendChild(plus);
-		setTimeout(() => plus.remove(), 1000);
+		// Оновлюємо баланс після того як перші монети долетіли
+		setTimeout(() => {
+			this.balance += bonusAmount;
+			this.updateUI();
+		}, coinDuration);
 	}
 
 	showCTA() {
@@ -1024,6 +1034,9 @@ class SlotMachine {
 	disableSpinButtons() {
 		this.spinButton.classList.add('disabled');
 		this.autoButton.classList.add('disabled');
+		// Блокуємо buy bonus під час спіну
+		const buyBtn = document.querySelector('.buy-bonus:not(.buy-bonus--used)');
+		if (buyBtn) buyBtn.classList.add('buy-bonus--spinning');
 	}
 
 	// Розблоковує кнопки спіну
@@ -1034,6 +1047,9 @@ class SlotMachine {
 
 		this.spinButton.classList.remove('disabled');
 		this.autoButton.classList.remove('disabled');
+		// Розблоковуємо buy bonus після спіну
+		const buyBtn = document.querySelector('.buy-bonus:not(.buy-bonus--used)');
+		if (buyBtn) buyBtn.classList.remove('buy-bonus--spinning');
 	}
 
 	// Отримує значення ставок з кнопок
