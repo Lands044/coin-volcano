@@ -307,6 +307,29 @@ class SlotMachine {
 			const randomOffset = Math.floor(Math.random() * this.icons) * iconHeight;
 			strip.style.transform = `translateY(-${randomOffset}px)`;
 		});
+
+		this.updateCenterClass();
+	}
+
+	// Додає клас .is-center до іконок центрального рядка
+	updateCenterClass() {
+		const columns = this.drumSpinner.querySelectorAll('.drum__column');
+		const iconHeight = this.config.getIconHeight();
+
+		columns.forEach((column) => {
+			const strip = column.querySelector('.drum__strip');
+			const icons = strip.querySelectorAll('.drum__image');
+
+			icons.forEach(icon => icon.classList.remove('is-center'));
+
+			const match = strip.style.transform.match(/translateY\(-?(\d+(?:\.\d+)?)px\)/);
+			const offset = match ? parseFloat(match[1]) : 0;
+			const centerIndex = Math.round(offset / iconHeight) + 1;
+
+			if (icons[centerIndex]) {
+				icons[centerIndex].classList.add('is-center');
+			}
+		});
 	}
 
 	// Обробка зміни розміру вікна
@@ -427,6 +450,11 @@ class SlotMachine {
 		setTimeout(() => {
 			strip.classList.remove('active');
 		}, duration - 250);
+
+		// Оновлюємо .is-center після зупинки колонки
+		setTimeout(() => {
+			this.updateCenterClass();
+		}, duration + (colIndex * 100) + 50);
 	}
 
 	// Знаходить позицію послідовності іконок у стрічці

@@ -21,7 +21,7 @@
 				<!-- Drum + Jackpots above it -->
 				<div class="game__field">
 					<!-- Jackpots top row — same width as drum -->
-					<div class="jackpots">
+					<div class="jackpots" id="jackpots">
 						<div class="jackpot jackpot--grand">
 							<span class="jackpot__label">GRAND</span>
 							<span class="jackpot__value">500.00</span>
@@ -40,6 +40,8 @@
 						</div>
 					</div>
 					<div class="drum">
+						<!-- Center win-line highlight overlay -->
+						<div class="drum__payline"></div>
 						<div class="drum__spinner">
 							<div class="drum__column">
 								<div class="drum__image"><img src="@img/icon/icon-1.webp" alt="Icon game"></div>
