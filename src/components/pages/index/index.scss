@@ -325,8 +325,8 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 // Right sidebar buttons
 // ─────────────────────────────────────────
 .side-btn {
-	width: vw(56);
-	height: vw(56);
+	width: vw(68);
+	height: vw(68);
 	border-radius: 50%;
 	background: rgba(50, 50, 80, 0.85);
 	border: vw(2) solid rgba(255, 255, 255, 0.3);
@@ -340,6 +340,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	text-decoration: none;
 	flex-shrink: 0;
 	position: relative;
+	margin-right: 8px;
 
 	@media (max-width: toEm($mobile)) {
 		width: 40px;
@@ -412,9 +413,10 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 	// Turbo spin — більша, з підписом
 	&--turbo {
-		width: vw(68);
-		height: vw(68);
+		width: vw(90);
+		height: vw(90);
 		border-color: rgba(255, 255, 255, 0.5);
+		margin-right: 0;
 
 		@media (max-width: toEm($mobile)) {
 			width: 48px;
@@ -423,7 +425,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 		.side-btn__label {
 			display: block;
-			font-size: vw(8);
+			font-size: vw(10);
 
 			@media (max-width: toEm($mobile)) {
 				font-size: 5px;
@@ -432,8 +434,8 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		}
 
 		.side-btn__icon--turbo {
-			width: vw(22);
-			height: vw(22);
+			width: vw(36);
+			height: vw(36);
 			margin-top: vw(2);
 
 			@media (max-width: toEm($mobile)) {
