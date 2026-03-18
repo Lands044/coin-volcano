@@ -28,6 +28,11 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		align-items: stretch;
 		justify-content: center;
 		flex: 1;
+		padding: 10px 0;
+
+		@media (max-width:toEm($mobile)){
+			padding: 0 15px;
+		}
 	}
 }
 
@@ -52,8 +57,18 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		align-items: stretch;
 		min-height: 0;
 
+		@media (max-width:toEm($tablet)){
+			grid-template-columns: vw(120) 1fr vw(120);
+		}
+
 		@media (max-width: toEm($mobile)) {
-			grid-template-columns: 80px 1fr 60px;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		@media (max-height:toEm(720)) {
+			gap: 5px;
 		}
 	}
 
@@ -65,9 +80,13 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		gap: vw(20);
 		padding: vw(20);
 
+		@media (max-width:toEm($tablet)){
+			padding: 10px;
+		}
+
 		@media (max-width: toEm($mobile)) {
-			padding: 10px 8px;
-			gap: 12px;
+			align-items: center;
+			flex-direction: row;
 		}
 
 		&--right {
@@ -84,14 +103,14 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		width: 100%;
 		max-width: vw(180);
 
+		@media (max-height:toEm(720)) {
+			max-width: vw(120);
+		}
+
 		img {
 			width: 100%;
 			height: auto;
 			display: block;
-		}
-
-		@media (max-width: toEm($mobile)) {
-			max-width: 70px;
 		}
 	}
 
@@ -120,6 +139,10 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		gap: 3px;
 		padding: 0 3px 0;
 	}
+
+	@media (max-height:toEm(720)){
+		display: none;
+	}
 }
 
 .jackpot {
@@ -136,6 +159,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		0 0 vw(12) rgba(212, 160, 23, 0.7),
 		inset 0 0 vw(4) rgba(255, 215, 100, 0.3);
 	overflow: visible;
+	position: relative;
 
 	@media (max-width: toEm($mobile)) {
 		border-width: 2px;
@@ -144,13 +168,18 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 	// Oval label tab on top
 	&__label {
-		position: relative;
+		position: absolute;
+		top: -50%;
+		transform: translateY(5%);
 		z-index: 2;
 		margin-top: vw(-2);
-		padding: vw(3) vw(14);
-		border-radius: vw(30);
+		padding: vw(1.5) vw(16);
+		max-width: 106px;
+		width: 100%;
+		text-align: center;
+		border-radius: 45%;
 		border: vw(2) solid #d4a017;
-		font-size: vw(15);
+		font-size: vw(20);
 		font-weight: 900;
 		text-transform: uppercase;
 		letter-spacing: vw(1);
@@ -176,17 +205,17 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		font-size: vw(26);
 		font-weight: 900;
 		line-height: 1;
-		padding: vw(8) vw(6) vw(10);
+		padding: vw(12) vw(6) vw(6);
 
 		@media (max-width: toEm($mobile)) {
 			font-size: 14px;
-			padding: 5px 4px 7px;
+			padding: 8px 4px 6px;
 		}
 	}
 
 	// GRAND — golden/orange body
 	&--grand {
-		background: linear-gradient(180deg, #e8a000 0%, #c47000 60%, #a05000 100%);
+		background: linear-gradient(180deg, #e8a000 0%, #ffcd36 60%, #ffad14 100%);
 
 		.jackpot__label {
 			color: #8b1a00;
@@ -255,12 +284,11 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	text-decoration: none;
 	width: 100%;
 	max-width: vw(160);
+	text-align: center;
+	gap: 5px;
 
 	@media (max-width: toEm($mobile)) {
-		padding: 6px 8px;
-		border-radius: 6px;
-		max-width: 70px;
-		border-width: 1px;
+		display: none;
 	}
 
 	&:hover {
@@ -584,7 +612,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	margin: 0 auto;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	align-items: center;
+	align-items: flex-start;
 	padding: vw(14) vw(30);
 	color: #fff;
 
@@ -612,13 +640,12 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	}
 
 	&__info-label {
-		font-size: vw(14);
-		font-weight: 400;
-		color: rgba(255, 255, 255, 0.75);
+		font-size: vw(18);
+		color: rgba(255, 255, 255, 0.95);
 		letter-spacing: vw(0.5);
 
 		@media (max-width: toEm($mobile)) {
-			font-size: 11px;
+			font-size: 16px;
 		}
 	}
 
