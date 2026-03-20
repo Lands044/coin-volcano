@@ -28,7 +28,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		align-items: stretch;
 		justify-content: center;
 		flex: 1;
-		padding: 10px 0;
+		padding: 30px 0;
 
 		@media (max-width:toEm($mobile)){
 			padding: 0 15px;
@@ -43,7 +43,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 	width: 100%;
 	height: 100vh;
 	height: 100dvh;
-	height: calc(var(--vh, 1vh) * 100);
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -103,7 +103,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		width: 100%;
 		max-width: vw(180);
 
-		@media (max-height:toEm(720)) {
+		@media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
 			max-width: vw(120);
 		}
 
@@ -140,7 +140,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		padding: 0 3px 0;
 	}
 
-	@media (max-height:toEm(720)){
+	@media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
 		display: none;
 	}
 }
@@ -623,7 +623,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 .menu {
 	max-width: 630px;
 	width: 100%;
-	margin: 0 auto;
+	margin: 20px auto 0 auto;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	align-items: flex-start;
@@ -632,6 +632,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 	@media (max-width: toEm($mobile)) {
 		padding: 10px 16px;
+		margin-top: 0;
 	}
 
 	&__info-block {
