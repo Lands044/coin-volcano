@@ -55,7 +55,7 @@ class SlotMachine {
 				minWidth: 0,
 				cols: 3,
 				rows: 3,
-				getIconHeight: () => window.innerHeight <= 720 ? 110 : 140
+				getIconHeight: () => (window.innerWidth <= 767.98 && window.innerHeight <= 720) ? 110 : 140
 			}
 		};
 
@@ -303,8 +303,11 @@ class SlotMachine {
 			this.drumSpinner.appendChild(column);
 		}
 
-		// Встановлюємо початкові позиції
-		this.initializePositions();
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				this.initializePositions();
+			});
+		});
 	}
 
 	// Встановлює початкові позиції стрічок
