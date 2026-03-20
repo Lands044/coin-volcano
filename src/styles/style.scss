@@ -46,7 +46,7 @@ body {
 		min-width: 0;
 	}
 
-	@media (orientation: landscape) and (max-height: 500px) {
+	@media (orientation: landscape) and (max-height: 500px) and (max-width:toEm($mobile)) {
 		display: none;
 	}
 }
@@ -122,7 +122,7 @@ body {
 	align-items: center;
 	justify-content: center;
 
-	@media (orientation: landscape) and (max-height: 500px) {
+	@media (orientation: landscape) and (max-height: 500px) and (max-width:toEm($mobile)) {
 		display: flex;
 		overflow: hidden;
 		touch-action: none;
