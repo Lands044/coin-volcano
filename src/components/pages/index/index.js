@@ -22,6 +22,7 @@ class SlotMachine {
 
 		// Елементи UI
 		this.balanceElement = document.querySelector('.menu__info .number');
+		this.winElement = document.querySelector('.menu__info-win .number');
 		this.betElement = document.querySelector('.menu__bet-value .number');
 
 		// Стан гри
@@ -34,6 +35,7 @@ class SlotMachine {
 
 		// Фінансові значення
 		this.balance = 1000.00;
+		this.win = 0;
 		this.betValues = this.getBetValuesFromButtons();
 		this.currentBetIndex = 0;
 		this.bet = this.betValues[this.currentBetIndex];
@@ -391,9 +393,9 @@ class SlotMachine {
 		// Показуємо результат
 		this.showResult(currentResult);
 
-		// Додаємо виграш
+		// Додаємо виграш до Win
 		if (currentResult.winAmount > 0) {
-			this.balance += currentResult.winAmount;
+			this.win = (this.win || 0) + currentResult.winAmount;
 			this.updateUI();
 		}
 
@@ -1114,6 +1116,9 @@ class SlotMachine {
 	updateUI() {
 		if (this.balanceElement) {
 			this.balanceElement.textContent = this.balance.toFixed(2);
+		}
+		if (this.winElement) {
+			this.winElement.textContent = this.win.toFixed(2);
 		}
 		if (this.betElement) {
 			this.betElement.textContent = this.bet;
