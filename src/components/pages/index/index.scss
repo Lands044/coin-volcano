@@ -25,7 +25,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 
 	&__container {
 		display: flex;
-		align-items: stretch;
+		align-items: center;
 		justify-content: center;
 		flex: 1;
 		padding: 30px 0;
@@ -140,9 +140,9 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		padding: 0 3px 0;
 	}
 
-	@media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
-		display: none;
-	}
+	// @media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
+	// 	display: none;
+	// }
 }
 
 .jackpot {
@@ -537,7 +537,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 			0 vw(3) vw(10) rgba(255, 185, 33, 0.7);
 
 		@media (max-width: toEm($mobile)) {
-			height: 140px;
+			height: calc(120px * 3);
 			left: -3px;
 			right: -3px;
 			border-width: 3px;
@@ -554,7 +554,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		height: vw(540);
 
 		@media (max-width: toEm($mobile)) {
-			height: calc(140px * 3);
+			height: calc(120px * 3);
 			border-width: 1px;
 			border-radius: 4px;
 		}
@@ -603,7 +603,7 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		}
 
 		@media (max-width: toEm($mobile)) {
-			height: 140px;
+			height: 120px;
 			padding: 8px;
 		}
 
