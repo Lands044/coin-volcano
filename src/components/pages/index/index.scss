@@ -140,9 +140,9 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		padding: 0 3px 0;
 	}
 
-	// @media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
-	// 	display: none;
-	// }
+	@media (max-height:toEm(720)) and (max-width: toEm($mobile)) {
+		display: none;
+	}
 }
 
 .jackpot {
@@ -542,10 +542,6 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 			right: -3px;
 			border-width: 3px;
 		}
-
-		@media (max-width: toEm($mobile)) and (max-height: toEm(720)) {
-			height: 110px;
-		}
 	}
 
 	&__column {
@@ -561,10 +557,6 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 			height: calc(140px * 3);
 			border-width: 1px;
 			border-radius: 4px;
-		}
-
-		@media (max-width: toEm($mobile)) and (max-height: toEm(720)) {
-			height: calc(110px * 3);
 		}
 	}
 
@@ -613,11 +605,6 @@ $frameGradient: linear-gradient(145deg, #f2a527 0%, #FFB300 50%, #f39f0f 100%);
 		@media (max-width: toEm($mobile)) {
 			height: 140px;
 			padding: 8px;
-		}
-
-		@media (max-width: toEm($mobile)) and (max-height: toEm(720)) {
-			height: 110px;
-			padding: 6px;
 		}
 
 		img {

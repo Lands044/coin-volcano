@@ -55,7 +55,7 @@ class SlotMachine {
 				minWidth: 0,
 				cols: 3,
 				rows: 3,
-				getIconHeight: () => (window.innerWidth <= 767.98 && window.innerHeight <= 720) ? 110 : 140
+				getIconHeight: () => 140
 			}
 		};
 
@@ -303,26 +303,14 @@ class SlotMachine {
 			this.drumSpinner.appendChild(column);
 		}
 
-		requestAnimationFrame(() => {
-			requestAnimationFrame(() => {
-				this.initializePositions();
-			});
-		});
-	}
-
-	// Повертає реальну висоту іконки з DOM (після застосування CSS)
-	getRealIconHeight() {
-		const firstIcon = this.drumSpinner.querySelector('.drum__image');
-		if (firstIcon) {
-			return firstIcon.getBoundingClientRect().height;
-		}
-		return this.config.getIconHeight();
+		// Встановлюємо початкові позиції
+		this.initializePositions();
 	}
 
 	// Встановлює початкові позиції стрічок
 	initializePositions() {
 		const columns = this.drumSpinner.querySelectorAll('.drum__column');
-		const iconHeight = this.getRealIconHeight();
+		const iconHeight = this.config.getIconHeight();
 
 		columns.forEach((column) => {
 			const strip = column.querySelector('.drum__strip');
@@ -337,7 +325,7 @@ class SlotMachine {
 	// Додає клас .is-center до іконок центрального рядка
 	updateCenterClass() {
 		const columns = this.drumSpinner.querySelectorAll('.drum__column');
-		const iconHeight = this.getRealIconHeight();
+		const iconHeight = this.config.getIconHeight();
 
 		columns.forEach((column) => {
 			const strip = column.querySelector('.drum__strip');
@@ -441,7 +429,7 @@ class SlotMachine {
 	// Анімація обертання однієї колонки
 	spinColumn(column, targetIcons, duration, colIndex) {
 		const strip = column.querySelector('.drum__strip');
-		const iconHeight = this.getRealIconHeight();
+		const iconHeight = this.config.getIconHeight();
 		const rows = this.config.rows;
 
 		// Знаходимо позицію потрібної послідовності в стрічці
@@ -584,7 +572,7 @@ class SlotMachine {
 	// Малює анімовану обводку навколо виграшних іконок
 	drawWinBorder(winLine) {
 		const columns = this.drumSpinner.querySelectorAll('.drum__column');
-		const iconHeight = this.getRealIconHeight();
+		const iconHeight = this.config.getIconHeight();
 		const rows = this.config.rows;
 
 		columns.forEach((column, colIndex) => {
@@ -810,7 +798,7 @@ class SlotMachine {
 	// Малює виграшну лінію через SVG
 	drawWinLine(winLine) {
 		const columns = this.drumSpinner.querySelectorAll('.drum__column');
-		const iconHeight = this.getRealIconHeight();
+		const iconHeight = this.config.getIconHeight();
 		const spinnerRect = this.drumSpinner.getBoundingClientRect();
 
 		// Створюємо SVG елемент
@@ -876,7 +864,7 @@ class SlotMachine {
 	applyWinIconEffects(winLine) {
 		const columns = this.drumSpinner.querySelectorAll('.drum__column');
 		const rows = this.config.rows;
-		const iconHeight = this.getRealIconHeight();
+		const iconHeight = this.config.getIconHeight();
 
 		columns.forEach((column, colIndex) => {
 			const strip = column.querySelector('.drum__strip');
@@ -1189,7 +1177,7 @@ class SlotMachine {
 		const lines = this.linePatterns[value];
 		if (!lines) return;
 
-		const iconHeight = this.getRealIconHeight();
+		const iconHeight = this.config.getIconHeight();
 		const spinnerRect = this.drumSpinner.getBoundingClientRect();
 		const columns = this.drumSpinner.querySelectorAll('.drum__column');
 
